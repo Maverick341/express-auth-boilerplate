@@ -2,19 +2,19 @@ import Mailgen from "mailgen";
 import nodemailer from "nodemailer";
 
 export const sendMail = async (options) => {
-    var mailGenerator = new Mailgen({
+    const mailGenerator = new Mailgen({
         theme: 'default',
         product: {
             // Appears in header & footer of e-mails
-            name: 'Task Manager',
+            name: 'Express Auth',
             link: 'https://mailgen.js/'
             // Optional product logo
             // logo: 'https://mailgen.js/img/logo.png'
         }
     });
 
-    var emailHTML = mailGenerator.generate(options.mailGenContent);
-    var emailText = mailGenerator.generatePlaintext(options.mailGenContent);
+    const emailHTML = mailGenerator.generate(options.mailGenContent);
+    const emailText = mailGenerator.generatePlaintext(options.mailGenContent);
 
     const transporter = nodemailer.createTransport({
         host: process.env.MAILTRAP_SMTP_HOST,
