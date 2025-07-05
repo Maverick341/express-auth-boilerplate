@@ -143,7 +143,7 @@ npm run dev
 
 ---
 ### API Documentation
-- Swagger UI available at: `http://localhost:${PORT}/api-docs`
+- Swagger UI available at: `http://localhost:${PORT}/api/v1/api-docs`
 
 ---
 
