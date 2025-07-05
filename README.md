@@ -118,6 +118,28 @@ CLOUDINARY_API_SECRET=...
 ```bash
 npm run dev
 ```
+---
+### API Endpoints
+
+| Method | Route                             | Description                              |
+|--------|-----------------------------------|------------------------------------------|
+| POST   | `/register`                       | Register a new user                      |
+| POST   | `/login`                          | Login user                               |
+| GET    | `/verifyEmail/:token`            | Verify email using token                 |
+| POST   | `/resendVerifyEmail`             | Resend verification email                |
+| GET    | `/refreshAccessToken`            | Refresh access token using cookie        |
+| GET    | `/profile`                        | Get current logged-in user's profile     |
+| GET    | `/logout`                         | Log out current user                     |
+| POST   | `/forgotPassword`                | Request password reset email             |
+| POST   | `/resetPassword/:token`          | Reset password using token               |
+| POST   | `/updateProfile`                 | Update user profile                      |
+| PATCH  | `/updateAvatar`                  | Update or upload avatar image            |
+| GET    | `/google`                         | Initiate Google OAuth login              |
+| GET    | `/google/callback`               | Google OAuth callback                    |
+| POST   | `/set-google-oauth-username`     | Set username after Google OAuth login    |
+| GET    | `/github`                         | Initiate GitHub OAuth login              |
+| GET    | `/github/callback`               | GitHub OAuth callback                    |
+
 
 ---
 ### API Documentation
