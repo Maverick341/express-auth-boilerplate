@@ -29,9 +29,17 @@ app.use(cookieParser());
 //   return res.render("homepage");
 // })
 
+app.all("/", (req, res) => {
+  res.status(403).json({ message: "Root path is restricted. Please use versioned API routes under /api/v1/" });
+});
+
 app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
   explorer: true
 }));
+
+app.get("/api/v1/", (req, res) => {
+  return res.redirect("/api/v1/api-docs");
+})
 
 //router imports
 import healthCheckRouter from "./routes/healthcheck.routes.js";

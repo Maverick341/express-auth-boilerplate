@@ -34,7 +34,6 @@ project-root/
 ├── public/
 ├── src/
 │   ├── config/
-│   │   └── swagger.js
 │   ├── controllers/
 │   ├── db/
 │   ├── middlewares/
