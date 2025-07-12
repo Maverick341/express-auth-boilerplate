@@ -81,6 +81,12 @@ const emailOnlyValidator = () => {
     ]
 }
 
+const userIdValidator = () => {
+    return [
+        param("userId").trim().isMongoId().withMessage("User id is invalid"),
+    ];
+};
+
 const resetPasswordValidator = () => {
     return [
         param('token')
@@ -96,5 +102,5 @@ const resetPasswordValidator = () => {
         // https://stackoverflow.com/questions/12548624/validate-a-password-with-express-validator
     ]
 }
-export { userRegistrationValidator, updateUserValidator, userLoginValidator, cookieBasedTokenValidator, verifyEmailValidator, emailOnlyValidator, resetPasswordValidator };
+export { userRegistrationValidator, updateUserValidator, userLoginValidator, cookieBasedTokenValidator, verifyEmailValidator, emailOnlyValidator, userIdValidator, resetPasswordValidator };
 

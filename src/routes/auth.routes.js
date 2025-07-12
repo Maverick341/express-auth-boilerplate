@@ -27,6 +27,7 @@ import {
     userRegistrationValidator,
     verifyEmailValidator,
     emailOnlyValidator,
+    userIdValidator,
     resetPasswordValidator
 } from "../validators/index.js";
 import { isLoggedIn, validateTempOAuthToken } from "../middlewares/auth.middlewares.js";
@@ -53,6 +54,16 @@ router.route("/logout").get(cookieBasedTokenValidator(), validate, isLoggedIn, l
 router.route("/forgotPassword").post(emailOnlyValidator(), validate, forgotPasswordRequest);
 router.route("/resetPassword/:token").post(resetPasswordValidator(), validate, changeCurrentPassword);
 router.route("/updateProfile").post(updateUserValidator(), validate, isLoggedIn,  updateAccountDetails);
+router
+    .route("/:userId")
+    .get(userIdValidator(), isLoggedIn, isAdmin, validate, getUser)
+    .patch(
+        [userIdValidator(), updateUserValidator()],
+        isLoggedIn,
+        isAdmin,
+        validate,
+        updateUserDetails,
+    );
 router.route("/updateAvatar").patch(
     isLoggedIn, 
     upload.single('avatar'),
