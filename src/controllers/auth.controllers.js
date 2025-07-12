@@ -42,7 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const avatar = await uploadOnCloudinary(avatarLocalPath);
-    
+
     const user = await User.create({
         fullname,
         avatar: {
@@ -403,7 +403,15 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.user._id).select("-password -refreshToken -__v");
+    const targetUserId = req.params.userId || req.user._id;
+
+    if (req.params.userId && req.user.role !== "admin") {
+        throw new ApiError(403, "Forbidden: You cannot view this user's data", {
+            code: ErrorCodes.UNAUTHORIZED_ACCESS
+        });
+    }
+
+    const user = await User.findById(targetUserId).select("-password -refreshToken -__v");
     console.log(user);
 
     if (!user) {
@@ -420,10 +428,18 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const updateAccountDetails = asyncHandler(async (req, res) => {
     const { username, fullname } = req.body;
 
+    const targetUserId = req.params.userId || req.user._id;
+
     if (!username || !fullname) {
         throw new ApiError(400, "All fields are required", {
             code: ErrorCodes.MISSING_FIELDS
         });
+    }
+
+    if (req.params.userId && req.user.role !== "admin") {
+        throw new ApiError(403, "Forbidden: Not authorized to update this user", {
+            code: ErrorCodes.UNAUTHORIZED_ACCESS
+        })
     }
 
     // Check if username is already taken by another user
@@ -435,7 +451,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     }
 
     const updatedUser = await User.findByIdAndUpdate(
-        req.user._id,
+        targetUserId,
         {
             $set: { username, fullname }
         },

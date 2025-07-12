@@ -52,6 +52,15 @@ export const isLoggedIn = asyncHandler(async (req, res, next) => {
     next();
 });
 
+export const isAdmin = (req, res, next) => {
+    if (req.user?.role !== "admin") {
+        throw new ApiError(403, "Admin access only", {
+            code: ErrorCodes.UNAUTHORIZED_ACCESS
+        });
+    }
+    next();
+};
+
 
 export const validateTempOAuthToken = asyncHandler(async (req, res, next) => {
     const authHeader = req.headers.authorization;

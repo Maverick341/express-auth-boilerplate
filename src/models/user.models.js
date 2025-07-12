@@ -55,6 +55,11 @@ const userSchema = new Schema({
             return !this.googleId && !this.githubId;
         },
     },
+    role: {
+        type: String,
+        enum: ['admin', 'user'],
+        default: 'user'
+    },
     isEmailVerified: {
         type: Boolean,
         default: false,
