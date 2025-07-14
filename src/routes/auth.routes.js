@@ -54,16 +54,7 @@ router.route("/logout").get(cookieBasedTokenValidator(), validate, isLoggedIn, l
 router.route("/forgotPassword").post(emailOnlyValidator(), validate, forgotPasswordRequest);
 router.route("/resetPassword/:token").post(resetPasswordValidator(), validate, changeCurrentPassword);
 router.route("/updateProfile").post(updateUserValidator(), validate, isLoggedIn,  updateAccountDetails);
-router
-    .route("/:userId")
-    .get(userIdValidator(), isLoggedIn, isAdmin, validate, getCurrentUser)
-    .patch(
-        [userIdValidator(), updateUserValidator()],
-        isLoggedIn,
-        isAdmin,
-        validate,
-        updateAccountDetails,
-    );
+
 router.route("/updateAvatar").patch(
     isLoggedIn, 
     upload.single('avatar'),
@@ -75,6 +66,17 @@ router.route("/google/callback").get(googleCallback);
 router.route("/set-google-oauth-username").post(validateTempOAuthToken, setGoogleOAuthUsername);
 router.route("/github").get(githubLogin);
 router.route("/github/callback").get(githubCallback);
+
+router
+    .route("/:userId")
+    .get(userIdValidator(), isLoggedIn, isAdmin, validate, getCurrentUser)
+    .patch(
+        [userIdValidator(), updateUserValidator()],
+        isLoggedIn,
+        isAdmin,
+        validate,
+        updateAccountDetails,
+    );
 
 
 
