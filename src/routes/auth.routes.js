@@ -30,7 +30,7 @@ import {
     userIdValidator,
     resetPasswordValidator
 } from "../validators/index.js";
-import { isLoggedIn, validateTempOAuthToken } from "../middlewares/auth.middlewares.js";
+import { isAdmin, isLoggedIn, validateTempOAuthToken } from "../middlewares/auth.middlewares.js";
 import { upload } from "../middlewares/multer.middlewares.js";
 import { catchMulterError } from "../utils/catchMulterErrors.js"
 
@@ -56,13 +56,13 @@ router.route("/resetPassword/:token").post(resetPasswordValidator(), validate, c
 router.route("/updateProfile").post(updateUserValidator(), validate, isLoggedIn,  updateAccountDetails);
 router
     .route("/:userId")
-    .get(userIdValidator(), isLoggedIn, isAdmin, validate, getUser)
+    .get(userIdValidator(), isLoggedIn, isAdmin, validate, getCurrentUser)
     .patch(
         [userIdValidator(), updateUserValidator()],
         isLoggedIn,
         isAdmin,
         validate,
-        updateUserDetails,
+        updateAccountDetails,
     );
 router.route("/updateAvatar").patch(
     isLoggedIn, 
