@@ -36,7 +36,7 @@ import {
   validateTempOAuthToken,
 } from "../middlewares/auth.middlewares.js";
 import { upload } from "../middlewares/multer.middlewares.js";
-// import { catchMulterError } from "../utils/catchMulterErrors.js";
+import { catchMulterError } from "../utils/catchMulterErrors.js";
 
 const router = Router();
 
@@ -75,7 +75,11 @@ router
 
 router
   .route("/updateAvatar")
-  .patch(isLoggedIn, upload.single("avatar"), updateUserAvatar);
+  .patch(
+    isLoggedIn,
+    catchMulterError(upload.single("avatar")),
+    updateUserAvatar,
+  );
 
 router.route("/google").get(googleLogin);
 router.route("/google/callback").get(googleCallback);
