@@ -1,20 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
 const chatMessageSchema = new Schema({
-    messageId: {
-        type: String,
-        required: true,
-        unique: true,
-        index: true,
-    },
     chatId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ChatSession',
         required: true,
-        index: true,
     },
     role: {
         type: String,
-        enum: ['user', 'assistant', 'system'],
         required: true,
     },
     content: {
@@ -23,15 +16,8 @@ const chatMessageSchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now,
-        index: true,
+        required: true,
     },
-    metadata: {
-        tokens: Number,
-        model: String,
-    },
-}, { timestamps: true });
-
-chatMessageSchema.index({ chatId: 1, createdAt: -1 });
+});
 
 export const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
