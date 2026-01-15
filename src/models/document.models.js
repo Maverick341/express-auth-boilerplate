@@ -1,22 +1,25 @@
 import mongoose, { Schema } from "mongoose";
 
-const documentSchema = new Schema({
+const documentSchema = new Schema(
+  {
     title: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     filename: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     status: {
-        type: String,
-        required: true,
+      type: String,
+      enum: ["uploaded", "indexed", "failed"],
+      default: "uploaded",
     },
-    createdAt: {
-        type: Date,
-        required: true,
-    },
-});
+  },
+  {
+    timestamps: { createdAt: true, updatedAt: false },
+  }
+);
+
 
 export const Document = mongoose.model('Document', documentSchema);
