@@ -58,7 +58,7 @@ router
 router.route("/login").post(userLoginValidator(), validate, loginUser);
 router
   .route("/refreshAccessToken")
-  .get(cookieBasedTokenValidator(), validate, isLoggedIn, refreshAccessToken);
+  .get(cookieBasedTokenValidator(), validate, refreshAccessToken);
 router.route("/profile").get(isLoggedIn, getCurrentUser);
 router
   .route("/logout")
