@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import errorHandler from "./middlewares/errorHandler.js";
 // import path from "path";
-
+import { env } from "./config/env.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./config/swagger.js";
 
@@ -11,7 +11,7 @@ const app = express()
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: env.CLIENT_URL,
     credentials: true,
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -44,6 +44,7 @@ app.get("/api/v1/", (req, res) => {
 //router imports
 import healthCheckRouter from "./routes/healthcheck.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import { env } from "./config/env.js";
 
 app.use("/api/v1/healthCheck", healthCheckRouter);
 app.use("/api/v1/auth", authRouter);

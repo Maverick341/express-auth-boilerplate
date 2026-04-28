@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { env } from "../config/env";
 
 const connectDB = async () => {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(env.MONGO_URI);
     console.log("MongoDB connected");
 };
 

@@ -4,6 +4,7 @@ import { User } from "../models/user.models.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { ErrorCodes } from "../utils/constants.js";
 import { ApiError } from "../utils/api-error.js";
+import { env } from "../config/env.js";
 
 export const isLoggedIn = asyncHandler(async (req, res, next) => {
     console.log(req.cookies);
@@ -20,7 +21,7 @@ export const isLoggedIn = asyncHandler(async (req, res, next) => {
     let decodedToken;
 
     try {
-        decodedToken = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+        decodedToken = jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET);
     } catch (error) {
         throw new ApiError(401, "Invalid or expired access token", {
             code: ErrorCodes.INVALID_ACCESS_TOKEN
@@ -85,7 +86,7 @@ export const validateTempOAuthToken = asyncHandler(async (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.TEMP_TOKEN_SECRET);
+        const decoded = jwt.verify(token, env.TEMP_TOKEN_SECRET);
         req.tempUser = decoded; // Attach to req for further use
         next();
     } catch (error) {
