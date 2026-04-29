@@ -90,7 +90,7 @@ router.route("/github").get(githubLogin);
 router.route("/github/callback").get(githubCallback);
 
 router
-  .route("/:userId")
+  .route("/admin/:userId")
   .get(userIdValidator(), isLoggedIn, isAdmin, validate, getCurrentUser)
   .patch(
     [userIdValidator(), updateUserValidator()],
